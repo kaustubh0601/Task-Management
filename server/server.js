@@ -14,7 +14,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:5173', // Vite's default port
+    origin: 'http://task-management-wiix.vercel.app', // Vite's default port
     credentials: true
 }));
 app.use(express.json()); // Parse JSON bodies
