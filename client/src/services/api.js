@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base URL
 const API = axios.create({
-  baseURL: 'https://task-management-blue-xi.vercel.app/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://task-management-blue-xi.vercel.app/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

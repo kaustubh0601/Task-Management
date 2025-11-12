@@ -13,9 +13,28 @@ const app = express();
 connectDB();
 
 // Middleware
+// CORS Configuration - Allow requests from your frontend
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'https://task-management-wiix.vercel.app', // Your frontend Vercel URL (HTTPS)
+    process.env.FRONTEND_URL // Additional frontend URL from env
+].filter(Boolean);
+
 app.use(cors({
-    origin: 'http://task-management-wiix.vercel.app', // Vite's default port
-    credentials: true
+    origin: function (origin, callback) {
+        // Allow requests with no origin (mobile apps, Postman, curl, etc.)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
